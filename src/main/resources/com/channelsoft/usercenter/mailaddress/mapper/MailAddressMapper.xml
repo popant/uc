@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.channelsoft.usercenter.mailaddress.mapper.MailAddressMapper">
+	<!--如果数据库和类字段的名字相同，则不用-->
+	<resultMap id="mailAddressResult" type="com.channelsoft.usercenter.mailaddress.po.MailAddress" autoMapping="true">
+		<id property="id" column="id"/>
+		<result property="enterpriseId" column="enterprise_id"/>
+		<result property="phoneNumber" column="phone_number"/>
+		<result property="mailAddress" column="mail_address"/>
+		<result property="postalCode" column="postal_code"/>
+		<result property="mailName" column="mail_name"/>
+		<result property="createTime" column="create_time"/>
+		<result property="alterTime" column="update_time"/>
+
+	</resultMap>
+	<select id="query" parameterType="com.channelsoft.usercenter.mailaddress.po.MailAddress" resultMap="mailAddressResult">
+		<include refid="select"/>
+		<include refid="where"/>
+	</select>
+
+	<insert id="add" parameterType="com.channelsoft.usercenter.mailaddress.po.MailAddress" >
+		INSERT INTO
+		invoice_mailing_address (enterprise_id,phone_number,mail_address,postal_code,mail_name,create_time,update_time)
+		VALUES
+		(#{enterpriseId} ,#{phoneNumber},#{mailAddress},#{postalCode},#{mailName},#{createTime},#{alterTime})
+	</insert>
+
+	<update id="update" parameterType="com.channelsoft.usercenter.mailaddress.po.MailAddress">
+		UPDATE
+		invoice_mailing_address
+		SET
+		phone_number = #{phoneNumber},
+		mail_address = #{mailAddress},
+		postal_code = #{postalCode},
+		mail_name = #{mailName},
+		update_time =#{alterTime}
+		WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="com.channelsoft.usercenter.mailaddress.po.MailAddress" >
+		DELETE
+		FROM
+		invoice_mailing_address
+		WHERE
+		id = #{id}
+	</delete>
+
+	<sql id="select">
+		SELECT *
+		FROM
+		invoice_mailing_address
+	</sql>
+
+	<sql id="where">
+		WHERE
+		1 = 1
+		<if test="null != enterpriseId and enterpriseId != ''">
+			AND enterprise_id = #{enterpriseId}
+		</if>
+		<if test="null != phoneNumber and phoneNumber != ''">
+			AND phone_number LIKE '%${phoneNumber}%'
+		</if>
+		<if test="null != mailAddress and mailAddress != ''">
+			AND mail_address LIKE '%${mailAddress}%'
+		</if>
+		<if test="null != postalCode and postalCode != ''">
+			AND postal_code LIKE '%${postalCode}%'
+		</if>
+		<if test="null != mailName and mailName != ''">
+			AND mail_name LIKE '%${mailName}%'
+		</if>
+	</sql>
+</mapper>

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.generator.mapper.EnterpriseInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.generator.po.EnterpriseInfo" >
+    <id column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
+    <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR" />
+    <result column="enterprise_address" property="enterpriseAddress" jdbcType="VARCHAR" />
+    <result column="contact_person" property="contactPerson" jdbcType="VARCHAR" />
+    <result column="contact_info" property="contactInfo" jdbcType="VARCHAR" />
+    <result column="audit_pass_time" property="auditPassTime" jdbcType="TIMESTAMP" />
+    <result column="audit_person" property="auditPerson" jdbcType="VARCHAR" />
+    <result column="audit_status" property="auditStatus" jdbcType="SMALLINT" typeHandler="com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler" />
+    <result column="audit_info" property="auditInfo" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.channelsoft.usercenter.generator.po.EnterpriseInfo" extends="BaseResultMap" >
+    <result column="business_licence" property="businessLicence" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.auditStatusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.auditStatusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    enterprise_id, enterprise_name, enterprise_address, contact_person, contact_info, 
+    audit_pass_time, audit_person, audit_status, audit_info, update_time, create_time, 
+    email, user_level
+  </sql>
+  <sql id="Blob_Column_List" >
+    business_licence
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from enterprise_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from enterprise_info
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from enterprise_info
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfoExample" >
+    delete from enterprise_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfo" >
+    insert into enterprise_info (enterprise_id, enterprise_name, enterprise_address, 
+      contact_person, contact_info, audit_pass_time, 
+      audit_person, audit_status, 
+      audit_info, update_time, create_time, 
+      email, user_level, business_licence
+      )
+    values (#{enterpriseId,jdbcType=INTEGER}, #{enterpriseName,jdbcType=VARCHAR}, #{enterpriseAddress,jdbcType=VARCHAR}, 
+      #{contactPerson,jdbcType=VARCHAR}, #{contactInfo,jdbcType=VARCHAR}, #{auditPassTime,jdbcType=TIMESTAMP}, 
+      #{auditPerson,jdbcType=VARCHAR}, #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler}, 
+      #{auditInfo,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{email,jdbcType=VARCHAR}, #{userLevel,jdbcType=INTEGER}, #{businessLicence,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfo" >
+    insert into enterprise_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="enterpriseName != null" >
+        enterprise_name,
+      </if>
+      <if test="enterpriseAddress != null" >
+        enterprise_address,
+      </if>
+      <if test="contactPerson != null" >
+        contact_person,
+      </if>
+      <if test="contactInfo != null" >
+        contact_info,
+      </if>
+      <if test="auditPassTime != null" >
+        audit_pass_time,
+      </if>
+      <if test="auditPerson != null" >
+        audit_person,
+      </if>
+      <if test="auditStatus != null" >
+        audit_status,
+      </if>
+      <if test="auditInfo != null" >
+        audit_info,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="userLevel != null" >
+        user_level,
+      </if>
+      <if test="businessLicence != null" >
+        business_licence,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseName != null" >
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseAddress != null" >
+        #{enterpriseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null" >
+        #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditPassTime != null" >
+        #{auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditPerson != null" >
+        #{auditPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler},
+      </if>
+      <if test="auditInfo != null" >
+        #{auditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="businessLicence != null" >
+        #{businessLicence,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfoExample" resultType="java.lang.Integer" >
+    select count(*) from enterprise_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update enterprise_info
+    <set >
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseName != null" >
+        enterprise_name = #{record.enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterpriseAddress != null" >
+        enterprise_address = #{record.enterpriseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPerson != null" >
+        contact_person = #{record.contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactInfo != null" >
+        contact_info = #{record.contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditPassTime != null" >
+        audit_pass_time = #{record.auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditPerson != null" >
+        audit_person = #{record.auditPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatus != null" >
+        audit_status = #{record.auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler},
+      </if>
+      <if test="record.auditInfo != null" >
+        audit_info = #{record.auditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLevel != null" >
+        user_level = #{record.userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessLicence != null" >
+        business_licence = #{record.businessLicence,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update enterprise_info
+    set enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_name = #{record.enterpriseName,jdbcType=VARCHAR},
+      enterprise_address = #{record.enterpriseAddress,jdbcType=VARCHAR},
+      contact_person = #{record.contactPerson,jdbcType=VARCHAR},
+      contact_info = #{record.contactInfo,jdbcType=VARCHAR},
+      audit_pass_time = #{record.auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{record.auditPerson,jdbcType=VARCHAR},
+      audit_status = #{record.auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler},
+      audit_info = #{record.auditInfo,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      email = #{record.email,jdbcType=VARCHAR},
+      user_level = #{record.userLevel,jdbcType=INTEGER},
+      business_licence = #{record.businessLicence,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update enterprise_info
+    set enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      enterprise_name = #{record.enterpriseName,jdbcType=VARCHAR},
+      enterprise_address = #{record.enterpriseAddress,jdbcType=VARCHAR},
+      contact_person = #{record.contactPerson,jdbcType=VARCHAR},
+      contact_info = #{record.contactInfo,jdbcType=VARCHAR},
+      audit_pass_time = #{record.auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{record.auditPerson,jdbcType=VARCHAR},
+      audit_status = #{record.auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler},
+      audit_info = #{record.auditInfo,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      email = #{record.email,jdbcType=VARCHAR},
+      user_level = #{record.userLevel,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfo" >
+    update enterprise_info
+    <set >
+      <if test="enterpriseName != null" >
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseAddress != null" >
+        enterprise_address = #{enterpriseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        contact_person = #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null" >
+        contact_info = #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditPassTime != null" >
+        audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditPerson != null" >
+        audit_person = #{auditPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler},
+      </if>
+      <if test="auditInfo != null" >
+        audit_info = #{auditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="businessLicence != null" >
+        business_licence = #{businessLicence,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfo" >
+    update enterprise_info
+    set enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      enterprise_address = #{enterpriseAddress,jdbcType=VARCHAR},
+      contact_person = #{contactPerson,jdbcType=VARCHAR},
+      contact_info = #{contactInfo,jdbcType=VARCHAR},
+      audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{auditPerson,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler},
+      audit_info = #{auditInfo,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      user_level = #{userLevel,jdbcType=INTEGER},
+      business_licence = #{businessLicence,jdbcType=LONGVARBINARY}
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.generator.po.EnterpriseInfo" >
+    update enterprise_info
+    set enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      enterprise_address = #{enterpriseAddress,jdbcType=VARCHAR},
+      contact_person = #{contactPerson,jdbcType=VARCHAR},
+      contact_info = #{contactInfo,jdbcType=VARCHAR},
+      audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{auditPerson,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.AuditStatusHandler},
+      audit_info = #{auditInfo,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      user_level = #{userLevel,jdbcType=INTEGER}
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </update>
+</mapper>

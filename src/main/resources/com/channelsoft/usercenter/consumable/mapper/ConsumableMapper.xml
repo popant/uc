@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.consumable.mapper.ConsumableMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.consumable.po.Consumable" >
+    <id column="consumable_id" property="consumableId" jdbcType="INTEGER" />
+    <result column="consumable_name" property="consumableName" jdbcType="VARCHAR" />
+    <result column="consumable_price" property="consumablePrice" jdbcType="DECIMAL" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="is_shelf" property="isShelf" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="consume_resource" property="consumeResource" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    consumable_id, consumable_name, consumable_price, product_id, is_shelf, create_time, 
+    consume_resource
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from consumable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from consumable
+    where consumable_id = #{consumableId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from consumable
+    where consumable_id = #{consumableId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableExample" >
+    delete from consumable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.consumable.po.Consumable" >
+    insert into consumable (consumable_id, consumable_name, consumable_price, 
+      product_id, is_shelf, create_time, 
+      consume_resource)
+    values (#{consumableId,jdbcType=INTEGER}, #{consumableName,jdbcType=VARCHAR}, #{consumablePrice,jdbcType=DECIMAL}, 
+      #{productId,jdbcType=INTEGER}, #{isShelf,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{consumeResource,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.consumable.po.Consumable" >
+    insert into consumable
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consumableId != null" >
+        consumable_id,
+      </if>
+      <if test="consumableName != null" >
+        consumable_name,
+      </if>
+      <if test="consumablePrice != null" >
+        consumable_price,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="isShelf != null" >
+        is_shelf,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="consumeResource != null" >
+        consume_resource,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consumableId != null" >
+        #{consumableId,jdbcType=INTEGER},
+      </if>
+      <if test="consumableName != null" >
+        #{consumableName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumablePrice != null" >
+        #{consumablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="isShelf != null" >
+        #{isShelf,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeResource != null" >
+        #{consumeResource,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableExample" resultType="java.lang.Integer" >
+    select count(*) from consumable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update consumable
+    <set >
+      <if test="record.consumableId != null" >
+        consumable_id = #{record.consumableId,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumableName != null" >
+        consumable_name = #{record.consumableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumablePrice != null" >
+        consumable_price = #{record.consumablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isShelf != null" >
+        is_shelf = #{record.isShelf,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.consumeResource != null" >
+        consume_resource = #{record.consumeResource,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update consumable
+    set consumable_id = #{record.consumableId,jdbcType=INTEGER},
+      consumable_name = #{record.consumableName,jdbcType=VARCHAR},
+      consumable_price = #{record.consumablePrice,jdbcType=DECIMAL},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      is_shelf = #{record.isShelf,jdbcType=SMALLINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      consume_resource = #{record.consumeResource,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.consumable.po.Consumable" >
+    update consumable
+    <set >
+      <if test="consumableName != null" >
+        consumable_name = #{consumableName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumablePrice != null" >
+        consumable_price = #{consumablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="isShelf != null" >
+        is_shelf = #{isShelf,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consumeResource != null" >
+        consume_resource = #{consumeResource,jdbcType=BIGINT},
+      </if>
+    </set>
+    where consumable_id = #{consumableId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.consumable.po.Consumable" >
+    update consumable
+    set consumable_name = #{consumableName,jdbcType=VARCHAR},
+      consumable_price = #{consumablePrice,jdbcType=DECIMAL},
+      product_id = #{productId,jdbcType=INTEGER},
+      is_shelf = #{isShelf,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      consume_resource = #{consumeResource,jdbcType=BIGINT}
+    where consumable_id = #{consumableId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryConsumables" parameterType="Integer" resultType="com.channelsoft.usercenter.consumable.po.Consumable">
+		 <include refid="queryConsumables"></include>
+  </select>
+  
+  <sql id="queryConsumables">
+		SELECT
+		consumable_id AS consumableId,
+		consumable_name AS consumableName,
+		consumable_price AS consumablePrice,
+		product_id AS productId,
+		is_shelf AS isShelf,
+		create_time AS createTime,
+		consume_resource AS consumeResource
+		FROM consumable
+		WHERE product_id = #{productId}
+		ORDER BY consumablePrice ASC
+	</sql>
+</mapper>

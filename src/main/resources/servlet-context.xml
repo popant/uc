@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--扫描的部分-->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+    <!--排除扫描的包， 对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.channelsoft.usercenter">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+    <!--配置不会被mvc拦截的请求 也就是资源请求-->
+    <mvc:default-servlet-handler/>
+    <!--<mvc:resources mapping="/js/**" location="/js/"/>-->
+    <!--HandlerAdapter接口 &#45;&#45; 处理请求的映射-->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <util:list id="beanList">
+<!--                 <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/> -->
+                <ref bean="mappingJacksonHttpMessageConverter"/>
+            </util:list>
+        </property>
+        <property name="webBindingInitializer" ref="webBindingInitializer"/>
+    </bean>
+    <bean id="webBindingInitializer"
+          class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+        <property name="conversionService" ref="conversionService"/>
+    </bean>
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+          <property name="converters">
+            <list>
+                <bean class="com.channelsoft.usercenter.invoice.po.typeHandler.MultipartFileToByteArrayEditor"/>  
+            </list>
+         </property>
+    </bean>
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+        <property name="objectMapper" ref="qnCustomObjectMapper"/>
+        <property name="supportedMediaTypes" value="text/plain;charset=UTF-8"/>
+    </bean>
+    <bean id="qnCustomObjectMapper" class="com.channelsoft.usercenter.common.util.QnCustomObjectMapper"></bean>
+    <!-- json视图层序列化包装类 -->
+    <!--配置spring mvc的转发规则-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="defaultEncoding" value="UTF-8"/>
+    <property name="maxUploadSize" value="16777216"/>
+    <property name="maxInMemorySize" value="4096"/>
+    </bean>
+    <!-- 总错误处理 -->
+    <bean id="exceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">redirect:/login</prop>
+                <prop key="org.apache.shiro.authz.AuthorizationException">redirect:/login</prop>
+            </props>
+        </property>
+        <property name="defaultErrorView">
+            <value>/error</value>
+        </property>
+        <property name="defaultStatusCode">
+            <value>500</value>
+        </property>
+        <property name="warnLogCategory">
+            <value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver
+            </value>
+        </property>
+    </bean>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <context:property-placeholder   location="classpath:email.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder   location="classpath:httpInterface.properties" ignore-unresolvable="true"/>
+</beans>

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.invoice.mapper.InvoiceRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.invoice.po.InvoiceRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="postal_code" property="postalCode" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="invoice_money" property="invoiceMoney" jdbcType="DECIMAL" />
+    <result column="invoice_id" property="invoiceId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="mail_time" property="mailTime" jdbcType="TIMESTAMP" />
+    <result column="mail_type" property="mailType" jdbcType="SMALLINT" typeHandler="com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler" />
+    <result column="mail_id" property="mailId" jdbcType="VARCHAR" />
+    <result column="mail_user_id" property="mailUserId" jdbcType="INTEGER" />
+    <result column="invoice_status" property="invoiceStatus" jdbcType="SMALLINT" typeHandler="com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.mailTypeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.invoiceStatusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.mailTypeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.invoiceStatusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, enterprise_id, phone_number, address, postal_code, name, invoice_money, invoice_id, 
+    create_time, mail_time, mail_type, mail_id, mail_user_id, invoice_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invoice_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from invoice_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from invoice_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceRecordExample" >
+    delete from invoice_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceRecord" >
+    insert into invoice_record (id, enterprise_id, phone_number, 
+      address, postal_code, name, 
+      invoice_money, invoice_id, create_time, 
+      mail_time, mail_type, 
+      mail_id, mail_user_id, invoice_status
+      )
+    values (#{id,jdbcType=INTEGER}, #{enterpriseId,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{postalCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{invoiceMoney,jdbcType=DECIMAL}, #{invoiceId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{mailTime,jdbcType=TIMESTAMP}, #{mailType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler}, 
+      #{mailId,jdbcType=VARCHAR}, #{mailUserId,jdbcType=INTEGER}, #{invoiceStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceRecord" >
+    insert into invoice_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="postalCode != null" >
+        postal_code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money,
+      </if>
+      <if test="invoiceId != null" >
+        invoice_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="mailTime != null" >
+        mail_time,
+      </if>
+      <if test="mailType != null" >
+        mail_type,
+      </if>
+      <if test="mailId != null" >
+        mail_id,
+      </if>
+      <if test="mailUserId != null" >
+        mail_user_id,
+      </if>
+      <if test="invoiceStatus != null" >
+        invoice_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postalCode != null" >
+        #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceMoney != null" >
+        #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceId != null" >
+        #{invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mailTime != null" >
+        #{mailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mailType != null" >
+        #{mailType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler},
+      </if>
+      <if test="mailId != null" >
+        #{mailId,jdbcType=VARCHAR},
+      </if>
+      <if test="mailUserId != null" >
+        #{mailUserId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceStatus != null" >
+        #{invoiceStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceRecordExample" resultType="java.lang.Integer" >
+    select count(*) from invoice_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update invoice_record
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalCode != null" >
+        postal_code = #{record.postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceMoney != null" >
+        invoice_money = #{record.invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.invoiceId != null" >
+        invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mailTime != null" >
+        mail_time = #{record.mailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mailType != null" >
+        mail_type = #{record.mailType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler},
+      </if>
+      <if test="record.mailId != null" >
+        mail_id = #{record.mailId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailUserId != null" >
+        mail_user_id = #{record.mailUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceStatus != null" >
+        invoice_status = #{record.invoiceStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update invoice_record
+    set id = #{record.id,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      postal_code = #{record.postalCode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      invoice_money = #{record.invoiceMoney,jdbcType=DECIMAL},
+      invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      mail_time = #{record.mailTime,jdbcType=TIMESTAMP},
+      mail_type = #{record.mailType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler},
+      mail_id = #{record.mailId,jdbcType=VARCHAR},
+      mail_user_id = #{record.mailUserId,jdbcType=INTEGER},
+      invoice_status = #{record.invoiceStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceRecord" >
+    update invoice_record
+    <set >
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postalCode != null" >
+        postal_code = #{postalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceMoney != null" >
+        invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceId != null" >
+        invoice_id = #{invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mailTime != null" >
+        mail_time = #{mailTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mailType != null" >
+        mail_type = #{mailType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler},
+      </if>
+      <if test="mailId != null" >
+        mail_id = #{mailId,jdbcType=VARCHAR},
+      </if>
+      <if test="mailUserId != null" >
+        mail_user_id = #{mailUserId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceStatus != null" >
+        invoice_status = #{invoiceStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceRecord" >
+    update invoice_record
+    set enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      postal_code = #{postalCode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      invoice_money = #{invoiceMoney,jdbcType=DECIMAL},
+      invoice_id = #{invoiceId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      mail_time = #{mailTime,jdbcType=TIMESTAMP},
+      mail_type = #{mailType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.MailTypeHandler},
+      mail_id = #{mailId,jdbcType=VARCHAR},
+      mail_user_id = #{mailUserId,jdbcType=INTEGER},
+      invoice_status = #{invoiceStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceMailStatusHandler}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getSumInvoiceMoneyStatics" parameterType="Integer" resultType="BigDecimal">
+	SELECT
+	SUM(invoice_money) AS sumInvoiceMoney
+	FROM invoice_record
+	WHERE enterprise_id = #{entId,jdbcType=INTEGER}
+  </select>
+</mapper>

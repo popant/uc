@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.account.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.account.po.Role" >
+    <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_eng_name" property="roleEngName" jdbcType="VARCHAR" />
+    <result column="role_type" property="roleType" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    role_id, role_name, role_eng_name, role_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.account.po.example.RoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.account.po.example.RoleExample" >
+    delete from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.account.po.Role" >
+    insert into role (role_id, role_name, role_eng_name, 
+      role_type)
+    values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleEngName,jdbcType=VARCHAR}, 
+      #{roleType,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.account.po.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="roleEngName != null" >
+        role_eng_name,
+      </if>
+      <if test="roleType != null" >
+        role_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleEngName != null" >
+        #{roleEngName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        #{roleType,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.account.po.example.RoleExample" resultType="java.lang.Integer" >
+    select count(*) from role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update role
+    <set >
+      <if test="record.roleId != null" >
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleName != null" >
+        role_name = #{record.roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleEngName != null" >
+        role_eng_name = #{record.roleEngName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleType != null" >
+        role_type = #{record.roleType,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update role
+    set role_id = #{record.roleId,jdbcType=INTEGER},
+      role_name = #{record.roleName,jdbcType=VARCHAR},
+      role_eng_name = #{record.roleEngName,jdbcType=VARCHAR},
+      role_type = #{record.roleType,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.account.po.Role" >
+    update role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleEngName != null" >
+        role_eng_name = #{roleEngName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        role_type = #{roleType,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.account.po.Role" >
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_eng_name = #{roleEngName,jdbcType=VARCHAR},
+      role_type = #{roleType,jdbcType=SMALLINT}
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <!-- 通过用户id 查询用户 拥有的角色 -->
+  <select id="selectRolesByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    SELECT r.* FROM role r LEFT JOIN user_role_rela ur ON r.id = ur.role_id
+    WHERE ur.user_id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- STRUTSCX LOG4J CONFIGURATION - XML style -->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d %-5p -[%t] [%C{1}] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="FILE"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="logs/gls/gls.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d %-5p -[%t] [%C{1}] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="DAILY"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="logs/gls/gls.log" />
+		<param name="Append" value="true" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d %-5p -[%t] [%C{1}] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="WARN" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/gls/warn/gls_warn.log" />   
+		<param name="MaxFileSize" value="51200KB" />   
+		<param name="MaxBackupIndex" value="10" />   
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d %-5p -[%t] [%C{1}] %m%n" />
+		</layout>   
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">     
+		  <param name="LevelMin" value="DEBUG" />     
+		  <param name="LevelMax" value="ERROR" />     
+		</filter>   
+	</appender>
+	<logger name="com.channelsoft.usercenter">
+		<level value="DEBUG" />
+	</logger>
+	<root>
+		<level value="WARN" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="DAILY" />
+	</root>
+</log4j:configuration>

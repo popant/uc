@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="/usercenter/jslib/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/usercenter/jslib/knockout-3.2.0.js"></script>
+    <script type="text/javascript">
+        var availableMeals = [
+            { mealName: 'Standard', description: 'Dry crusts of bread', extraCost: 0 },
+            { mealName: 'Premium', description: 'Fresh bread with cheese', extraCost: 9.95 },
+            { mealName: 'Deluxe', description: 'Caviar and vintage Dr Pepper', extraCost: 18.50 }
+        ];
+        var viewModel = {
+            /* we'll populate this in a moment */
+            chosenMeal: ko.observableArray(availableMeals)
+        };
+        $(function(){
+//            this.availableMeals = ko.observableArray(availableMeals);
+            viewModel.chosenMeal.push({ mealName: 'Deluxe1', description: 'Caviar and vintage Dr Pepper1', extraCost: 18.501});
+            ko.applyBindings(viewModel); // Makes Knockout get to work
+        });
+    </script>
+</head>
+<body>
+    <h3>Meal upgrades</h3>
+    <p>Make your flight more bearable by selecting a meal to match your social and economic status.</p>
+    Chosen meal: <select data-bind="options: availableMeals,
+                                optionsText: 'mealName',
+                                value: chosenMeal"></select>
+    <p>
+        You've chosen:
+        <b data-bind="text: chosenMeal().description"></b>
+        (price: <span data-bind='text: chosenMeal().extraCost'></span>)
+    </p>
+</body>
+</html>

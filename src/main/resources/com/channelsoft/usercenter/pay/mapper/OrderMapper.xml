@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.channelsoft.usercenter.pay.mapper.OrderMapper">
+	<resultMap id="orderResult"
+		type="com.channelsoft.usercenter.pay.po.Order"
+		autoMapping="true">
+
+	</resultMap>
+	<select id="query" parameterType="com.channelsoft.usercenter.pay.po.Order"
+		resultMap="orderResult">
+		<include refid="select" />
+		<include refid="where" />
+	</select>
+
+	<insert id="add" parameterType="com.channelsoft.usercenter.pay.po.Order">
+		INSERT INTO
+		consumable_order
+		(order_id,product_id,totle_price,order_status,pay_time,create_time,enterprise_id)
+		VALUES
+		(#{order_id}
+		,#{product_id},#{totle_price},#{order_status},#{pay_time},#{create_time},#{enterprise_id})
+	</insert>
+
+	<update id="update" parameterType="com.channelsoft.usercenter.pay.po.Order">
+		UPDATE
+		consumable_order
+		SET
+		order_status = #{order_status},
+		pay_time =#{pay_time}
+		WHERE
+		order_id =
+		#{order_id}
+	</update>
+
+	<delete id="delete" parameterType="com.channelsoft.usercenter.pay.po.Order">
+		DELETE
+		FROM
+		consumable_order
+		WHERE
+		order_id = #{order_id}
+	</delete>
+
+	<sql id="select">
+		SELECT *
+		FROM
+		consumable_order
+	</sql>
+
+	<sql id="where">
+		WHERE
+		1 = 1
+		<if test="null != order_id and order_id != ''">
+			AND order_id = #{order_id}
+		</if>
+	</sql>
+</mapper>

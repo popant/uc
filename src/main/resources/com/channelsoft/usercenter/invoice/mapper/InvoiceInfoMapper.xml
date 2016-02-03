@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.invoice.mapper.InvoiceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.invoice.po.InvoiceInfo" >
+    <id column="invoice_id" property="invoiceId" jdbcType="INTEGER" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="VARCHAR" />
+    <result column="invoice_kind" property="invoiceKind" jdbcType="SMALLINT" typeHandler="com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler" />
+    <result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+    <result column="invoice_type" property="invoiceType" jdbcType="SMALLINT" typeHandler="com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler" />
+    <result column="tax_registration_number" property="taxRegistrationNumber" jdbcType="VARCHAR" />
+    <result column="basic_account_bank_name" property="basicAccountBankName" jdbcType="VARCHAR" />
+    <result column="basic_account_number" property="basicAccountNumber" jdbcType="VARCHAR" />
+    <result column="register_place_address" property="registerPlaceAddress" jdbcType="VARCHAR" />
+    <result column="register_tel" property="registerTel" jdbcType="VARCHAR" />
+    <result column="audit_status" property="auditStatus" jdbcType="SMALLINT" typeHandler="com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler" />
+    <result column="alter_time" property="alterTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="audit_pass_time" property="auditPassTime" jdbcType="TIMESTAMP" />
+    <result column="audit_person" property="auditPerson" jdbcType="VARCHAR" />
+    <result column="audit_info" property="auditInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.channelsoft.usercenter.invoice.po.InvoiceInfo" extends="BaseResultMap" >
+    <result column="business_licence" property="businessLicence" jdbcType="LONGVARBINARY" />
+    <result column="tax_registration" property="taxRegistration" jdbcType="LONGVARBINARY" />
+    <result column="general_tax_qua" property="generalTaxQua" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.invoiceKindCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.invoiceTypeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.auditStatusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.invoiceKindCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.invoiceTypeCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.auditStatusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    invoice_id, enterprise_id, invoice_kind, invoice_title, invoice_type, tax_registration_number, 
+    basic_account_bank_name, basic_account_number, register_place_address, register_tel, 
+    audit_status, alter_time, create_time, audit_pass_time, audit_person, audit_info
+  </sql>
+  <sql id="Blob_Column_List" >
+    business_licence, tax_registration, general_tax_qua
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from invoice_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invoice_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from invoice_info
+    where invoice_id = #{invoiceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from invoice_info
+    where invoice_id = #{invoiceId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfoExample" >
+    delete from invoice_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfo" >
+    insert into invoice_info (invoice_id, enterprise_id, invoice_kind, 
+      invoice_title, invoice_type, 
+      tax_registration_number, basic_account_bank_name, 
+      basic_account_number, register_place_address, 
+      register_tel, audit_status, 
+      alter_time, create_time, audit_pass_time, 
+      audit_person, audit_info, business_licence, 
+      tax_registration, general_tax_qua
+      )
+    values (#{invoiceId,jdbcType=INTEGER}, #{enterpriseId,jdbcType=VARCHAR}, #{invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler}, 
+      #{invoiceTitle,jdbcType=VARCHAR}, #{invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler}, 
+      #{taxRegistrationNumber,jdbcType=VARCHAR}, #{basicAccountBankName,jdbcType=VARCHAR}, 
+      #{basicAccountNumber,jdbcType=VARCHAR}, #{registerPlaceAddress,jdbcType=VARCHAR}, 
+      #{registerTel,jdbcType=VARCHAR}, #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler}, 
+      #{alterTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{auditPassTime,jdbcType=TIMESTAMP}, 
+      #{auditPerson,jdbcType=VARCHAR}, #{auditInfo,jdbcType=VARCHAR}, #{businessLicence,jdbcType=LONGVARBINARY}, 
+      #{taxRegistration,jdbcType=LONGVARBINARY}, #{generalTaxQua,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfo" >
+    insert into invoice_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invoiceId != null" >
+        invoice_id,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="invoiceKind != null" >
+        invoice_kind,
+      </if>
+      <if test="invoiceTitle != null" >
+        invoice_title,
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type,
+      </if>
+      <if test="taxRegistrationNumber != null" >
+        tax_registration_number,
+      </if>
+      <if test="basicAccountBankName != null" >
+        basic_account_bank_name,
+      </if>
+      <if test="basicAccountNumber != null" >
+        basic_account_number,
+      </if>
+      <if test="registerPlaceAddress != null" >
+        register_place_address,
+      </if>
+      <if test="registerTel != null" >
+        register_tel,
+      </if>
+      <if test="auditStatus != null" >
+        audit_status,
+      </if>
+      <if test="alterTime != null" >
+        alter_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="auditPassTime != null" >
+        audit_pass_time,
+      </if>
+      <if test="auditPerson != null" >
+        audit_person,
+      </if>
+      <if test="auditInfo != null" >
+        audit_info,
+      </if>
+      <if test="businessLicence != null" >
+        business_licence,
+      </if>
+      <if test="taxRegistration != null" >
+        tax_registration,
+      </if>
+      <if test="generalTaxQua != null" >
+        general_tax_qua,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invoiceId != null" >
+        #{invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceKind != null" >
+        #{invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler},
+      </if>
+      <if test="invoiceTitle != null" >
+        #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler},
+      </if>
+      <if test="taxRegistrationNumber != null" >
+        #{taxRegistrationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="basicAccountBankName != null" >
+        #{basicAccountBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="basicAccountNumber != null" >
+        #{basicAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPlaceAddress != null" >
+        #{registerPlaceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTel != null" >
+        #{registerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler},
+      </if>
+      <if test="alterTime != null" >
+        #{alterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditPassTime != null" >
+        #{auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditPerson != null" >
+        #{auditPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="auditInfo != null" >
+        #{auditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicence != null" >
+        #{businessLicence,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="taxRegistration != null" >
+        #{taxRegistration,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="generalTaxQua != null" >
+        #{generalTaxQua,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfoExample" resultType="java.lang.Integer" >
+    select count(*) from invoice_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update invoice_info
+    <set >
+      <if test="record.invoiceId != null" >
+        invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceKind != null" >
+        invoice_kind = #{record.invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler},
+      </if>
+      <if test="record.invoiceTitle != null" >
+        invoice_title = #{record.invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceType != null" >
+        invoice_type = #{record.invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler},
+      </if>
+      <if test="record.taxRegistrationNumber != null" >
+        tax_registration_number = #{record.taxRegistrationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basicAccountBankName != null" >
+        basic_account_bank_name = #{record.basicAccountBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basicAccountNumber != null" >
+        basic_account_number = #{record.basicAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerPlaceAddress != null" >
+        register_place_address = #{record.registerPlaceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerTel != null" >
+        register_tel = #{record.registerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatus != null" >
+        audit_status = #{record.auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler},
+      </if>
+      <if test="record.alterTime != null" >
+        alter_time = #{record.alterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditPassTime != null" >
+        audit_pass_time = #{record.auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditPerson != null" >
+        audit_person = #{record.auditPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditInfo != null" >
+        audit_info = #{record.auditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicence != null" >
+        business_licence = #{record.businessLicence,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.taxRegistration != null" >
+        tax_registration = #{record.taxRegistration,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.generalTaxQua != null" >
+        general_tax_qua = #{record.generalTaxQua,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update invoice_info
+    set invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      invoice_kind = #{record.invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler},
+      invoice_title = #{record.invoiceTitle,jdbcType=VARCHAR},
+      invoice_type = #{record.invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler},
+      tax_registration_number = #{record.taxRegistrationNumber,jdbcType=VARCHAR},
+      basic_account_bank_name = #{record.basicAccountBankName,jdbcType=VARCHAR},
+      basic_account_number = #{record.basicAccountNumber,jdbcType=VARCHAR},
+      register_place_address = #{record.registerPlaceAddress,jdbcType=VARCHAR},
+      register_tel = #{record.registerTel,jdbcType=VARCHAR},
+      audit_status = #{record.auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler},
+      alter_time = #{record.alterTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      audit_pass_time = #{record.auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{record.auditPerson,jdbcType=VARCHAR},
+      audit_info = #{record.auditInfo,jdbcType=VARCHAR},
+      business_licence = #{record.businessLicence,jdbcType=LONGVARBINARY},
+      tax_registration = #{record.taxRegistration,jdbcType=LONGVARBINARY},
+      general_tax_qua = #{record.generalTaxQua,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update invoice_info
+    set invoice_id = #{record.invoiceId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      invoice_kind = #{record.invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler},
+      invoice_title = #{record.invoiceTitle,jdbcType=VARCHAR},
+      invoice_type = #{record.invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler},
+      tax_registration_number = #{record.taxRegistrationNumber,jdbcType=VARCHAR},
+      basic_account_bank_name = #{record.basicAccountBankName,jdbcType=VARCHAR},
+      basic_account_number = #{record.basicAccountNumber,jdbcType=VARCHAR},
+      register_place_address = #{record.registerPlaceAddress,jdbcType=VARCHAR},
+      register_tel = #{record.registerTel,jdbcType=VARCHAR},
+      audit_status = #{record.auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler},
+      alter_time = #{record.alterTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      audit_pass_time = #{record.auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{record.auditPerson,jdbcType=VARCHAR},
+      audit_info = #{record.auditInfo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfo" >
+    update invoice_info
+    <set >
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceKind != null" >
+        invoice_kind = #{invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler},
+      </if>
+      <if test="invoiceTitle != null" >
+        invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler},
+      </if>
+      <if test="taxRegistrationNumber != null" >
+        tax_registration_number = #{taxRegistrationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="basicAccountBankName != null" >
+        basic_account_bank_name = #{basicAccountBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="basicAccountNumber != null" >
+        basic_account_number = #{basicAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="registerPlaceAddress != null" >
+        register_place_address = #{registerPlaceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTel != null" >
+        register_tel = #{registerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler},
+      </if>
+      <if test="alterTime != null" >
+        alter_time = #{alterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditPassTime != null" >
+        audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditPerson != null" >
+        audit_person = #{auditPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="auditInfo != null" >
+        audit_info = #{auditInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicence != null" >
+        business_licence = #{businessLicence,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="taxRegistration != null" >
+        tax_registration = #{taxRegistration,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="generalTaxQua != null" >
+        general_tax_qua = #{generalTaxQua,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where invoice_id = #{invoiceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfo" >
+    update invoice_info
+    set enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      invoice_kind = #{invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler},
+      invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      invoice_type = #{invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler},
+      tax_registration_number = #{taxRegistrationNumber,jdbcType=VARCHAR},
+      basic_account_bank_name = #{basicAccountBankName,jdbcType=VARCHAR},
+      basic_account_number = #{basicAccountNumber,jdbcType=VARCHAR},
+      register_place_address = #{registerPlaceAddress,jdbcType=VARCHAR},
+      register_tel = #{registerTel,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler},
+      alter_time = #{alterTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{auditPerson,jdbcType=VARCHAR},
+      audit_info = #{auditInfo,jdbcType=VARCHAR},
+      business_licence = #{businessLicence,jdbcType=LONGVARBINARY},
+      tax_registration = #{taxRegistration,jdbcType=LONGVARBINARY},
+      general_tax_qua = #{generalTaxQua,jdbcType=LONGVARBINARY}
+    where invoice_id = #{invoiceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.invoice.po.InvoiceInfo" >
+    update invoice_info
+    set enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      invoice_kind = #{invoiceKind,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceKindTypeHandler},
+      invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
+      invoice_type = #{invoiceType,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceTypeHandler},
+      tax_registration_number = #{taxRegistrationNumber,jdbcType=VARCHAR},
+      basic_account_bank_name = #{basicAccountBankName,jdbcType=VARCHAR},
+      basic_account_number = #{basicAccountNumber,jdbcType=VARCHAR},
+      register_place_address = #{registerPlaceAddress,jdbcType=VARCHAR},
+      register_tel = #{registerTel,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.invoice.po.typeHandler.InvoiceAuditStatusHandler},
+      alter_time = #{alterTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      audit_pass_time = #{auditPassTime,jdbcType=TIMESTAMP},
+      audit_person = #{auditPerson,jdbcType=VARCHAR},
+      audit_info = #{auditInfo,jdbcType=VARCHAR}
+    where invoice_id = #{invoiceId,jdbcType=INTEGER}
+  </update>
+</mapper>

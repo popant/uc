@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--扫描Service-->
+    <context:component-scan base-package="com.channelsoft.usercenter">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+    </context:component-scan>
+    <context:property-placeholder   location="classpath:datasource.properties" ignore-unresolvable="true"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+        <property name="driverClass">
+            <value>${jdbc.driverClass}</value>
+        </property>
+        <property name="jdbcUrl">
+            <value>${jdbc.url}</value>
+        </property>
+        <property name="user">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value>
+        </property>
+        <!--连接池中保留的最小连接数。 -->
+        <property name="minPoolSize">
+            <value>15</value>
+        </property>
+        <!--连接池中保留的最大连接数。Default: 15 -->
+        <property name="maxPoolSize">
+            <value>30</value>
+        </property>
+        <!--初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
+        <property name="initialPoolSize">
+            <value>3</value>
+        </property>
+        <!--每30秒检查所有连接池中的空闲连接。Default: 0 -->
+        <property name="idleConnectionTestPeriod">
+            <value>0</value>
+        </property>
+    </bean>
+    <!-- 定义jdbcTemplate -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+    <!-- mybatis文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.channelsoft.usercenter.**.po" />
+        <!-- 自动扫描entity目录，省略Configuration.xml里手工配置 -->
+        <property name="mapperLocations" value="classpath:com/channelsoft/usercenter/**/mapper/*.xml"/>
+    </bean>
+    <!-- 扫描所有的mapper接口 ,如果有多个，则可以用 ,; 隔开-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.channelsoft.usercenter.**.mapper" />
+    </bean>
+    <!-- 配置事务管理器 -->
+    <bean name="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 注解方式配置事物 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- 拦截器方式配置事物 -->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="login*" propagation="REQUIRED" />
+            <tx:method name="regist*" propagation="REQUIRED" />
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <!--定义在service包和所有子包里的任意类的任意方法的执行 -->
+        <aop:pointcut id="transactionPointcut"  expression="execution(* com.channelsoft.usercenter.*.service.*ServiceImpl.*(..))"/>
+        <aop:advisor pointcut-ref="transactionPointcut"  advice-ref="transactionAdvice"/>
+    </aop:config>
+    
+    
+    <!--添加定时任务，定时删除未支付的订单  -->
+	<bean id="deleteTask" class="com.channelsoft.usercenter.consumable.service.impl.DeleteOrderService"></bean>
+
+	<bean id="scheduledTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		 <property name="targetObject">
+           <ref bean="deleteTask" />
+       </property>
+		<property name="targetMethod">
+           <value >deleteOrderOutTime</value>	
+       </property>
+	</bean>
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <!--  这里不可以直接在属性jobDetail中引用taskJob，因为他要求的是一个jobDetail类型的对象，所以我们得通过MethodInvokingJobDetailFactoryBean来转一下 -->
+       <property name="jobDetail">
+           <ref bean="scheduledTask" />
+       </property>
+       <property name="cronExpression">
+           <value>0 55 * * * ?</value>
+       </property>
+    </bean> 
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+       <!-- 添加触发器 -->
+       <property name="triggers">
+           <list>
+              <ref local="cronTrigger" />
+           </list>
+       </property>
+    </bean>  
+</beans>

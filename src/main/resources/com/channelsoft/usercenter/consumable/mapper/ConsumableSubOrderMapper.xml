@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.consumable.mapper.ConsumableSubOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.consumable.po.ConsumableSubOrder" >
+    <id column="sub_order_id" property="subOrderId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="SMALLINT" />
+    <result column="consumable_id" property="consumableId" jdbcType="INTEGER" />
+    <result column="consumable_name" property="consumableName" jdbcType="VARCHAR" />
+    <result column="consumable_number" property="consumableNumber" jdbcType="INTEGER" />
+    <result column="consumable_price" property="consumablePrice" jdbcType="DECIMAL" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sub_order_id, order_id, product_id, consumable_id, consumable_name, consumable_number, 
+    consumable_price, total_price, enterprise_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableSubOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from consumable_sub_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from consumable_sub_order
+    where sub_order_id = #{subOrderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from consumable_sub_order
+    where sub_order_id = #{subOrderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableSubOrderExample" >
+    delete from consumable_sub_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableSubOrder" >
+    insert into consumable_sub_order (sub_order_id, order_id, product_id, 
+      consumable_id, consumable_name, consumable_number, 
+      consumable_price, total_price, enterprise_id
+      )
+    values (#{subOrderId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{productId,jdbcType=SMALLINT}, 
+      #{consumableId,jdbcType=INTEGER}, #{consumableName,jdbcType=VARCHAR}, #{consumableNumber,jdbcType=INTEGER}, 
+      #{consumablePrice,jdbcType=DECIMAL}, #{totalPrice,jdbcType=DECIMAL}, #{enterpriseId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableSubOrder" >
+    insert into consumable_sub_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subOrderId != null" >
+        sub_order_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="consumableId != null" >
+        consumable_id,
+      </if>
+      <if test="consumableName != null" >
+        consumable_name,
+      </if>
+      <if test="consumableNumber != null" >
+        consumable_number,
+      </if>
+      <if test="consumablePrice != null" >
+        consumable_price,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subOrderId != null" >
+        #{subOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=SMALLINT},
+      </if>
+      <if test="consumableId != null" >
+        #{consumableId,jdbcType=INTEGER},
+      </if>
+      <if test="consumableName != null" >
+        #{consumableName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumableNumber != null" >
+        #{consumableNumber,jdbcType=INTEGER},
+      </if>
+      <if test="consumablePrice != null" >
+        #{consumablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableSubOrderExample" resultType="java.lang.Integer" >
+    select count(*) from consumable_sub_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update consumable_sub_order
+    <set >
+      <if test="record.subOrderId != null" >
+        sub_order_id = #{record.subOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.consumableId != null" >
+        consumable_id = #{record.consumableId,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumableName != null" >
+        consumable_name = #{record.consumableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consumableNumber != null" >
+        consumable_number = #{record.consumableNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumablePrice != null" >
+        consumable_price = #{record.consumablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update consumable_sub_order
+    set sub_order_id = #{record.subOrderId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      product_id = #{record.productId,jdbcType=SMALLINT},
+      consumable_id = #{record.consumableId,jdbcType=INTEGER},
+      consumable_name = #{record.consumableName,jdbcType=VARCHAR},
+      consumable_number = #{record.consumableNumber,jdbcType=INTEGER},
+      consumable_price = #{record.consumablePrice,jdbcType=DECIMAL},
+      total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableSubOrder" >
+    update consumable_sub_order
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=SMALLINT},
+      </if>
+      <if test="consumableId != null" >
+        consumable_id = #{consumableId,jdbcType=INTEGER},
+      </if>
+      <if test="consumableName != null" >
+        consumable_name = #{consumableName,jdbcType=VARCHAR},
+      </if>
+      <if test="consumableNumber != null" >
+        consumable_number = #{consumableNumber,jdbcType=INTEGER},
+      </if>
+      <if test="consumablePrice != null" >
+        consumable_price = #{consumablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sub_order_id = #{subOrderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableSubOrder" >
+    update consumable_sub_order
+    set order_id = #{orderId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=SMALLINT},
+      consumable_id = #{consumableId,jdbcType=INTEGER},
+      consumable_name = #{consumableName,jdbcType=VARCHAR},
+      consumable_number = #{consumableNumber,jdbcType=INTEGER},
+      consumable_price = #{consumablePrice,jdbcType=DECIMAL},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+    where sub_order_id = #{subOrderId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.business.mapper.ProductAgreementInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.business.po.ProductAgreementInfo" >
+    <id column="agreement_id" property="agreementId" jdbcType="INTEGER" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="create_person" property="createPerson" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.channelsoft.usercenter.business.po.ProductAgreementInfo" extends="BaseResultMap" >
+    <result column="doc_scan" property="docScan" jdbcType="LONGVARBINARY" />
+    <result column="agreement_doc" property="agreementDoc" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    agreement_id, enterprise_id, product_id, create_person, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    doc_scan, agreement_doc
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product_agreement_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_agreement_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product_agreement_info
+    where agreement_id = #{agreementId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_agreement_info
+    where agreement_id = #{agreementId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfoExample" >
+    delete from product_agreement_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfo" >
+    insert into product_agreement_info (agreement_id, enterprise_id, product_id, 
+      create_person, create_time, doc_scan, 
+      agreement_doc)
+    values (#{agreementId,jdbcType=INTEGER}, #{enterpriseId,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
+      #{createPerson,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{docScan,jdbcType=LONGVARBINARY}, 
+      #{agreementDoc,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfo" >
+    insert into product_agreement_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agreementId != null" >
+        agreement_id,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="createPerson != null" >
+        create_person,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="docScan != null" >
+        doc_scan,
+      </if>
+      <if test="agreementDoc != null" >
+        agreement_doc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agreementId != null" >
+        #{agreementId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="createPerson != null" >
+        #{createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docScan != null" >
+        #{docScan,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="agreementDoc != null" >
+        #{agreementDoc,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfoExample" resultType="java.lang.Integer" >
+    select count(*) from product_agreement_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product_agreement_info
+    <set >
+      <if test="record.agreementId != null" >
+        agreement_id = #{record.agreementId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createPerson != null" >
+        create_person = #{record.createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.docScan != null" >
+        doc_scan = #{record.docScan,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.agreementDoc != null" >
+        agreement_doc = #{record.agreementDoc,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update product_agreement_info
+    set agreement_id = #{record.agreementId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      create_person = #{record.createPerson,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      doc_scan = #{record.docScan,jdbcType=LONGVARBINARY},
+      agreement_doc = #{record.agreementDoc,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product_agreement_info
+    set agreement_id = #{record.agreementId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      create_person = #{record.createPerson,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfo" >
+    update product_agreement_info
+    <set >
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="createPerson != null" >
+        create_person = #{createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docScan != null" >
+        doc_scan = #{docScan,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="agreementDoc != null" >
+        agreement_doc = #{agreementDoc,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where agreement_id = #{agreementId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfo" >
+    update product_agreement_info
+    set enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER},
+      create_person = #{createPerson,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      doc_scan = #{docScan,jdbcType=LONGVARBINARY},
+      agreement_doc = #{agreementDoc,jdbcType=LONGVARBINARY}
+    where agreement_id = #{agreementId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.business.po.ProductAgreementInfo" >
+    update product_agreement_info
+    set enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER},
+      create_person = #{createPerson,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where agreement_id = #{agreementId,jdbcType=INTEGER}
+  </update>
+  <select id="selectImg" parameterType="map" resultMap="responseImgMap">
+    select 
+    doc_scan as result
+    from product_agreement_info
+    where enterprise_id = #{entId,jdbcType=VARCHAR}
+    and product_id = #{productId,jdbcType=INTEGER}
+  </select>
+   <select id="selectDoc" parameterType="map" resultMap="responseMap">
+    select 
+    agreement_doc as result
+    from product_agreement_info
+    where enterprise_id = #{entId,jdbcType=VARCHAR}
+    and product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <resultMap id="responseMap" type="com.channelsoft.usercenter.business.po.BlobResult">
+      <result property="result" javaType="_byte[]" column="agreement_doc" jdbcType="BLOB"/>
+</resultMap>
+  <resultMap id="responseImgMap" type="com.channelsoft.usercenter.business.po.BlobResult">
+      <result property="result" javaType="_byte[]" column="doc_scan" jdbcType="BLOB"/>
+</resultMap>
+</mapper>

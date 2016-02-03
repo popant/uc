@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.consumable.mapper.EnterpriseProductRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.consumable.po.EnterpriseProductRela" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="SMALLINT" />
+    <result column="status" property="status" jdbcType="SMALLINT" typeHandler="com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.statusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+            <foreach collection="criteria.statusCriteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler} and #{criterion.secondValue,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, enterprise_id, product_id, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRelaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from enterprise_product_rela
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from enterprise_product_rela
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from enterprise_product_rela
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRelaExample" >
+    delete from enterprise_product_rela
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRela" >
+    insert into enterprise_product_rela (id, enterprise_id, product_id, 
+      status
+      )
+    values (#{id,jdbcType=INTEGER}, #{enterpriseId,jdbcType=VARCHAR}, #{productId,jdbcType=SMALLINT}, 
+      #{status,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRela" >
+    insert into enterprise_product_rela
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRelaExample" resultType="java.lang.Integer" >
+    select count(*) from enterprise_product_rela
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update enterprise_product_rela
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update enterprise_product_rela
+    set id = #{record.id,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=VARCHAR},
+      product_id = #{record.productId,jdbcType=SMALLINT},
+      status = #{record.status,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRela" >
+    update enterprise_product_rela
+    <set >
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRela" >
+    update enterprise_product_rela
+    set enterprise_id = #{enterpriseId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=SMALLINT},
+      status = #{status,jdbcType=SMALLINT,typeHandler=com.channelsoft.usercenter.account.po.typeHandler.ProductStatusHandler}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="validProduct" parameterType="com.channelsoft.usercenter.consumable.po.EnterpriseProductRela" resultMap="BaseResultMap">
+  	select * from enterprise_product_rela where enterprise_id = #{enterpriseId,jdbcType=VARCHAR}
+  	and product_id = #{productId,jdbcType=SMALLINT} and status = 4
+  </select>
+</mapper>

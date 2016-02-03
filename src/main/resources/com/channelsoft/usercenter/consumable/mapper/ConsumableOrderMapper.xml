@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.consumable.mapper.ConsumableOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.consumable.po.ConsumableOrder" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="totle_price" property="totlePrice" jdbcType="DECIMAL" />
+    <result column="order_status" property="orderStatus" jdbcType="SMALLINT" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
+    <result column="total_resource" property="totalResource" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, product_id, totle_price, order_status, pay_time, create_time, enterprise_id, 
+    total_resource
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from consumable_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from consumable_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from consumable_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableOrderExample" >
+    delete from consumable_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableOrder" >
+    insert into consumable_order (order_id, product_id, totle_price, 
+      order_status, pay_time, create_time, 
+      enterprise_id, total_resource)
+    values (#{orderId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{totlePrice,jdbcType=DECIMAL}, 
+      #{orderStatus,jdbcType=SMALLINT}, #{payTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{enterpriseId,jdbcType=INTEGER}, #{totalResource,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableOrder" >
+    insert into consumable_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="totlePrice != null" >
+        totle_price,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="totalResource != null" >
+        total_resource,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="totlePrice != null" >
+        #{totlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="totalResource != null" >
+        #{totalResource,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableOrderExample" resultType="java.lang.Integer" >
+    select count(*) from consumable_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update consumable_order
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.totlePrice != null" >
+        totle_price = #{record.totlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalResource != null" >
+        total_resource = #{record.totalResource,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update consumable_order
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      totle_price = #{record.totlePrice,jdbcType=DECIMAL},
+      order_status = #{record.orderStatus,jdbcType=SMALLINT},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      total_resource = #{record.totalResource,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableOrder" >
+    update consumable_order
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="totlePrice != null" >
+        totle_price = #{totlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="totalResource != null" >
+        total_resource = #{totalResource,jdbcType=BIGINT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableOrder" >
+    update consumable_order
+    set product_id = #{productId,jdbcType=INTEGER},
+      totle_price = #{totlePrice,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=SMALLINT},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      total_resource = #{totalResource,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="getInsertPK" resultType="Integer">
+  	 <include refid="getMyLastPK"></include>
+  </select>
+  
+  <sql id="getMyLastPK">
+		SELECT LAST_INSERT_ID()
+  </sql>
+  
+  <delete id="deleteOrderOutTime">
+  	DELETE tab1,tab2 from consumable_order tab1,consumable_sub_order tab2 WHERE 
+		tab1.order_id = tab2.order_id and tab1.order_status = 0
+	AND (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(tab1.create_time))/60 >= 30 
+  </delete>
+  
+</mapper>

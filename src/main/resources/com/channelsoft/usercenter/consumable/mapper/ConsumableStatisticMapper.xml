@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.channelsoft.usercenter.consumable.mapper.ConsumableStatisticMapper" >
+  <resultMap id="BaseResultMap" type="com.channelsoft.usercenter.consumable.po.ConsumableStatistic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="INTEGER" />
+    <result column="consumable_money" property="consumableMoney" jdbcType="DECIMAL" />
+    <result column="consumable_resource" property="consumableResource" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, product_id, enterprise_id, consumable_money, consumable_resource
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatisticExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from consumable_statistic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from consumable_statistic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from consumable_statistic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatisticExample" >
+    delete from consumable_statistic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatistic" >
+    insert into consumable_statistic (id, product_id, enterprise_id, 
+      consumable_money, consumable_resource)
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{enterpriseId,jdbcType=INTEGER}, 
+      #{consumableMoney,jdbcType=DECIMAL}, #{consumableResource,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatistic" >
+    insert into consumable_statistic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="consumableMoney != null" >
+        consumable_money,
+      </if>
+      <if test="consumableResource != null" >
+        consumable_resource,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="consumableMoney != null" >
+        #{consumableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumableResource != null" >
+        #{consumableResource,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatisticExample" resultType="java.lang.Integer" >
+    select count(*) from consumable_statistic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update consumable_statistic
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.enterpriseId != null" >
+        enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumableMoney != null" >
+        consumable_money = #{record.consumableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.consumableResource != null" >
+        consumable_resource = #{record.consumableResource,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update consumable_statistic
+    set id = #{record.id,jdbcType=INTEGER},
+      product_id = #{record.productId,jdbcType=INTEGER},
+      enterprise_id = #{record.enterpriseId,jdbcType=INTEGER},
+      consumable_money = #{record.consumableMoney,jdbcType=DECIMAL},
+      consumable_resource = #{record.consumableResource,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatistic" >
+    update consumable_statistic
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="consumableMoney != null" >
+        consumable_money = #{consumableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumableResource != null" >
+        consumable_resource = #{consumableResource,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatistic" >
+    update consumable_statistic
+    set product_id = #{productId,jdbcType=INTEGER},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      consumable_money = #{consumableMoney,jdbcType=DECIMAL},
+      consumable_resource = #{consumableResource,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="addConsumable" parameterType="com.channelsoft.usercenter.consumable.po.ConsumableStatistic">
+  	update consumable_statistic
+  	set consumable_money = consumable_money + #{consumableMoney,jdbcType=DECIMAL},
+  		consumable_resource = consumable_resource + #{consumableResource,jdbcType=BIGINT}
+  	where product_id = #{productId,jdbcType=INTEGER} and enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="getConsumableStatics" parameterType="Integer" resultType="com.channelsoft.usercenter.consumable.po.ConsumableStatistic">
+	SELECT
+	id AS id,
+	product_id AS productId,
+	enterprise_id AS enterpriseId,
+	consumable_money AS consumableMoney,
+	consumable_resource AS consumableResource
+	FROM consumable_statistic
+	WHERE enterprise_id = #{entId}
+  </select>
+    <select id="getSumConsumableStatics" parameterType="Integer" resultType="BigDecimal">
+	SELECT
+	SUM(consumable_money) AS sumConsumableMoney
+	FROM consumable_statistic
+	WHERE enterprise_id = #{entId}
+  </select>
+</mapper>
